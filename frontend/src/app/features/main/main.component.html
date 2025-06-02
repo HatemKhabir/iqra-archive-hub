@@ -1,0 +1,171 @@
+<div class="main-container">
+  <div class="sidebar">
+    <mat-form-field>
+      <mat-label>Select Country</mat-label>
+      <mat-select [(value)]="selectedCountry">
+        <mat-select-trigger>
+          @if (selectedCountry) {
+            <span class="flag-option">
+              <img
+                alt="{{ selectedCountry.name }} flag"
+                width="24"
+                [src]="
+                  'https://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                  selectedCountry.code.toUpperCase() +
+                  '.svg'
+                "
+                class="flag-icon"
+              />
+              {{ selectedCountry.name }}
+            </span>
+          } @else {
+            Select a Country
+          }
+        </mat-select-trigger>
+        <mat-option value="">Select a Country</mat-option>
+        @for (country of countries; track $index) 
+        {
+          
+        <mat-option [value]="country"><span class="flag-option">
+          <img
+            alt="{{ country.name }} flag"
+            width="24"
+            [src]="
+              'https://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+              country.code.toUpperCase() +
+              '.svg'
+            "
+            class="flag-icon"
+          />
+          {{ country.name }}
+        </span></mat-option>
+        } 
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select A Mosque</mat-label>
+      <mat-select [(value)]="selectedMosque" [disabled]="!selectedCountry">
+        @if(mosques.length === 0) {
+        <mat-option disabled>No Mosques available</mat-option>
+        } @else {
+        <mat-option value="">Select a Mosque</mat-option>
+        @for (mosque of mosques; track $index) {
+        <mat-option [value]="mosque">{{ mosque }}</mat-option>
+        } 
+      }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select Khotba</mat-label>
+      <mat-select [(value)]="selectedFile" [disabled]="!selectedMosque">
+        @if(filesList.length === 0) {
+        <mat-option disabled>No documents available</mat-option>
+        } @else {
+        <mat-option value="">Select a document</mat-option>
+        @for (file of filesList; track $index) {
+        <mat-option [value]="file">{{ file.name }}</mat-option>
+        } }
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Select Language</mat-label>
+      <mat-select [formControl]="languageControl" [disabled]="!selectedCountry">
+        <!-- Custom trigger to show the selected flag -->
+        <mat-select-trigger>
+          @if (languageControl.value) {
+            <span class="flag-option">
+              <img
+                alt="{{ getSelectedLanguageName() }} flag"
+                width="24"
+                [src]="
+                  'https://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                  languageControl.value.toUpperCase() +
+                  '.svg'
+                "
+                class="flag-icon"
+              />
+              {{ getSelectedLanguageName() }}
+            </span>
+          } @else {
+            Select a Language
+          }
+        </mat-select-trigger>
+        
+        <!-- Options -->
+        <mat-option value="">Select a language</mat-option>
+        @for (language of languages; track $index) {
+          <mat-option [value]="language.code">
+            <span class="flag-option">
+              <img
+                alt="{{ language.name }} flag"
+                width="24"
+                [src]="
+                  'https://purecatamphetamine.github.io/country-flag-icons/3x2/' +
+                  language.code.toUpperCase() +
+                  '.svg'
+                "
+                class="flag-icon"
+              />
+              {{ language.name }}
+            </span>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="content">
+    @if (!selectedFile) {
+    <div class="no-selection">
+      <mat-icon>description</mat-icon>
+      <h2>No document selected</h2>
+      <p>Select a document from the top or upload a new one</p>
+    </div>
+    } @else {
+    <div class="document-container">
+      <div class="document-header">
+        <h2>{{ selectedFile.name }}</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Translate to</mat-label>
+          <mat-select [formControl]="languageControl">
+            @for (language of languages; track language.code) {
+            <mat-option [value]="language.code">{{ language.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="document-view">
+        <div class="pdf-container">
+          <ngx-extended-pdf-viewer
+            #pdfViewer
+            [height]="'600px'"
+            [showSecondaryToolbarButton]="true"
+            [showPresentationModeButton]="true"
+            [showOpenFileButton]="false"
+            [showPrintButton]="true"
+            [showDownloadButton]="true"
+          >
+          </ngx-extended-pdf-viewer>
+        </div>
+
+        <div class="translation-container">
+          @if (translationLoading) {
+          <div class="translation-loading">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Translating document...</p>
+          </div>
+          } @else if (translatedText) {
+          <div class="translation-content">
+            <h3>Translation ({{ getSelectedLanguageName() }})</h3>
+            <div class="translation-text">
+              {{ translatedText }}
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
