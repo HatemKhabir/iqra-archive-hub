@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Khotba Connect Design System - Islamic themed colors and styles */
+
+@layer base {
+  :root {
+    /* Islamic Color Palette */
+    --background: 42 15% 97%; /* Soft beige #F5F1E6 */
+    --foreground: 158 100% 10%; /* Dark emerald for text */
+
+    --card: 0 0% 100%; /* Pure white for cards */
+    --card-foreground: 158 100% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 158 100% 10%;
+
+    --primary: 158 100% 25%; /* Emerald green #007E33 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 158 100% 35%; /* Lighter emerald for effects */
+
+    --secondary: 42 15% 97%; /* Soft beige */
+    --secondary-foreground: 158 100% 15%;
+
+    --muted: 42 25% 92%; /* Slightly darker beige */
+    --muted-foreground: 158 50% 30%;
+
+    --accent: 48 100% 54%; /* Gold #D4AF37 */
+    --accent-foreground: 158 100% 10%;
+    --accent-glow: 48 100% 65%; /* Lighter gold */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 42 25% 88%;
+    --input: 0 0% 100%;
+    --ring: 158 100% 25%;
+
+    --radius: 0.75rem; /* More rounded for Islamic aesthetic */
+
+    /* Islamic Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+
+    /* Islamic Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.2);
+    --shadow-gold: 0 5px 20px -5px hsl(var(--accent) / 0.3);
+    --shadow-soft: 0 2px 8px -2px hsl(var(--primary) / 0.1);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-poppins;
+    background-image: url('/src/assets/mosque-pattern-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /* Islamic Typography */
+  .font-arabic {
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  /* Islamic UI Components */
+  .mosque-card {
+    @apply bg-card backdrop-blur-sm border border-border/50 rounded-lg p-6;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+  }
+
+  .mosque-card:hover {
+    box-shadow: var(--shadow-elegant);
+    transform: translateY(-2px);
+  }
+
+  .islamic-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .verse-container {
+    @apply bg-card/90 backdrop-blur-md border border-accent/20 rounded-xl p-6;
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-hero {
+    @apply bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-elegant);
+    transition: var(--transition-bounce);
+  }
+
+  .btn-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-accent {
+    @apply bg-accent text-accent-foreground px-6 py-3 rounded-lg font-medium;
+    transition: var(--transition-smooth);
+  }
+
+  .btn-accent:hover {
+    background: var(--gradient-accent);
+    transform: translateY(-1px);
+  }
+
+  /* Islamic Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Geometric patterns */
+  .islamic-pattern {
+    background-image: 
+      radial-gradient(circle at 1px 1px, hsl(var(--accent) / 0.1) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+}
