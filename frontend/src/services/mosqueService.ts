@@ -13,9 +13,7 @@ try{
         params.append('city',city);
     }
     const url=`${API_BASE_URL}?${params.toString()}`;
-    console.log('Fetching mosques with URL:', url);
     const response = await axios.get(url);
-    console.log('Fetched mosques:', response.data);
     return response.data;
 
 }catch(error){

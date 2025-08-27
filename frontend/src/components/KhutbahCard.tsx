@@ -8,6 +8,7 @@ interface KhutbahCardProps {
   mosque: string;
   city: string;
   country: string;
+  type:string;
   language: string;
   topic: string;
   hasAudio: boolean;
@@ -20,6 +21,7 @@ const KhutbahCard = ({
   mosque,
   city,
   country,
+  type,
   language,
   topic,
   hasAudio,
@@ -67,6 +69,9 @@ const KhutbahCard = ({
         </p>
         <p className="text-sm text-muted-foreground">
           <span className="font-medium">Topic:</span> {topic}
+        </p>
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium">Type:</span> {type}
         </p>
       </div>
 

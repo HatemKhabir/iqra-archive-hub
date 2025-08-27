@@ -16,7 +16,7 @@ const Browse = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-  const [selectedMosque, setSelectedMosque] = useState("");
+  const [selectedMosque, setSelectedMosque] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState<{
     code: string;
     name: string;
@@ -58,14 +58,16 @@ const Browse = () => {
   const [languages, setLanguages] = useState<
     Array<{ code: string; name: string }>
   >([]);
-  const [types, setTypes] = useState<Array<{ khotbaType: string }>>([]);
+  const [types, setTypes] = useState<Array<{ khotbaType: string,displayName:string }>>([]);
 
   useEffect(() => {
     fetchKhotbasLanguages()
       .then((data) => setLanguages(data))
       .catch((err) => console.error(err));
     fetchKhotbasTypes()
-      .then((data) => setTypes(data))
+      .then((data) => {setTypes(data)
+        console.log("Fetched types:", data);
+      })
       .catch((err) => console.error(err));
   }, []);
 
@@ -112,7 +114,7 @@ const Browse = () => {
   useEffect(() => {
     if (selectedMosque) {
       fetchFilteredKhotbas(
-        parseInt(selectedMosque),
+        selectedMosque,
         selectedLanguage?.name,
         selectedType?.khotbaType
       )
@@ -210,7 +212,7 @@ const Browse = () => {
                   )?.isoCode || ""
                 );
                 setSelectedCity("");
-                setSelectedMosque("");
+                setSelectedMosque(0);
               }}
             >
               <option value="">All Countries</option>
@@ -227,7 +229,7 @@ const Browse = () => {
               value={selectedCity}
               onChange={(e) => {
                 setSelectedCity(e.target.value);
-                setSelectedMosque("");
+                setSelectedMosque(0);
               }}
               disabled={!selectedCountry}
             >
@@ -248,21 +250,14 @@ const Browse = () => {
               className="px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary"
               value={selectedMosque}
               onChange={(e) => {
-                setSelectedMosque(e.target.value);
-                fetchFilteredKhotbas(
-                  selectedMosque ? parseInt(selectedMosque) : null,
-                  selectedLanguage?.code,
-                  selectedType?.khotbaType
-                )
-                  .then((data) => setFilteredKhutbahs(data))
-                  .catch((err) => console.error(err));
+                setSelectedMosque(Number(e.target.value));
               }}
               disabled={!selectedCity}
             >
               <option value="">All Mosques</option>
               {availableMosques.map((mosque, index) => (
                 <option key={`${mosque.id}-${index}`} value={mosque.id}>
-                  {mosque.mosqueName}
+                  {mosque.mosqueName} - {mosque.city}
                 </option>
               ))}
             </select>
@@ -293,9 +288,9 @@ const Browse = () => {
               }}
             >
               <option value="">All Types</option>
-              {types.map((type) => (
-                <option key={type.khotbaType} value={type.khotbaType}>
-                  {type.khotbaType}
+              {types.map((type,index) => (
+                <option key={index} value={type.khotbaType}>
+                  {type.displayName}
                 </option>
               ))}
             </select>
@@ -305,7 +300,7 @@ const Browse = () => {
               onClick={() => {
                 setSelectedCountry("");
                 setSelectedCity("");
-                setSelectedMosque("");
+                setSelectedMosque(0);
                 setFilteredKhutbahs(null);
                 setSelectedType(null);
                 setSelectedLanguage(null);
@@ -336,6 +331,7 @@ const Browse = () => {
               date={
                 khutbah.creationDate ? new Date(khutbah.creationDate) : null
               }
+              type={khutbah.khotbaType}
               mosque={khutbah.mosqueName}
               city={khutbah.city}
               country={khutbah.country}
