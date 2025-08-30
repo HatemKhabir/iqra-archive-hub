@@ -4,6 +4,7 @@ interface Khotba{
     title:string;
     creationDate:Date;
     city:string;
+    isPedning:boolean;
     country:string;
     mosqueName:string;
     officialLanguage:string;

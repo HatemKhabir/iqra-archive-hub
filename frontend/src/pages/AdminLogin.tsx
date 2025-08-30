@@ -22,7 +22,7 @@ const AdminLogin = () => {
       if (formData.email === "admin@mosque.com" && formData.password === "password") {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("mosqueName", "Demo Mosque");
-        navigate("/admin/dashboard");
+        navigate("/admin/superadmin");
       } else {
         setError("Invalid email or password");
       }

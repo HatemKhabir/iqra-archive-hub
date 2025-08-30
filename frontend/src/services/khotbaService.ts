@@ -26,3 +26,20 @@ export const fetchFilteredKhotbas=async(mosqueId?:number,language?:string,type?:
     throw error;
  }
 }
+
+export const deleteKhotba=async(khotbaId:string)=>{
+    try{
+        const url=`${API_BASE_URL}/${khotbaId}`;
+        await axios.delete(url);
+    }catch(error){
+        console.error('Error deleting khotba:', error);
+        throw error;
+    }
+}
+export const fetchMosquesByAdmin = async (adminId: string) => {
+  const { data } = await axios.get(`/api/mosques/admin/${adminId}`);
+  return data;
+};
+
+
+
